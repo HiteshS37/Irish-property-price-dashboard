@@ -34,7 +34,9 @@ Using 12-month trailing CAGR extrapolation, Rest-of-Ireland prices are projected
 
 ## Repository Structure
 - `data/` — raw and cleaned CSV files
-- `scripts/clean_data.py` — data cleaning and transformation script
+- `scripts/clean_data.py` — data cleaning and transformation
+- `scripts/eda_analysis.py` — exploratory analysis and trend visualization
+- `scripts/forecast_analysis.py` — 6-month price forecast model
 - `images/` — exploratory plots and dashboard screenshots
 - `dashboard/` — Power BI dashboard file
 
