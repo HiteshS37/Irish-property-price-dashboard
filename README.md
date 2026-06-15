@@ -41,7 +41,7 @@ Using 12-month trailing CAGR extrapolation, Rest-of-Ireland prices are projected
 - `dashboard/` — Power BI dashboard file
 
 ## Tools Used
-Python (pandas, matplotlib), Power BI, CSO open data and AI coding assistants (Claude) were used to accelerate script development, debugging, and dashboard troubleshooting. All methodology, analysis decisions, and findings were reviewed and validated by the author.
+Python (pandas, matplotlib), Power BI, CSO open data and AI coding assistants (Claude) were used to accelerate script development and debugging. All methodology, analysis decisions, and findings were reviewed and validated by the author.
 
 ## Author
 Hitesh Srinivas
