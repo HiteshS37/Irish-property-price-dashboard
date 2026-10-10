@@ -6,7 +6,7 @@ Generates trend plots for National, Dublin, and Rest-of-Ireland price indices.
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('data/rppi_national_dublin.csv', parse_dates=['Date'])
+df = pd.read_csv('data/irppi_national_dublin.csv', parse_dates=['Date'])
 
 print("=== Summary Stats (Index Values) ===")
 print(df[['National - all residential properties',
