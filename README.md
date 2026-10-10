@@ -1,49 +1,55 @@
 # Irish Residential Property Price Dashboard
 
-An analysis of Irish residential property price trends (2005–2026), comparing Dublin vs the rest of Ireland, with a short-term forecast and an interactive Power BI dashboard.
+**Business question:** How have Irish residential property price indices changed nationally, in Dublin and outside Dublin, and what should a prospective mover investigate?
 
-## Business Question
-With property prices diverging significantly across Irish regions, where is the housing market moving — and what does this mean for someone relocating to Ireland?
+![Power BI dashboard](images/irppi_dashboard.png)
 
-## Key Finding
-Rest-of-Ireland property prices have overtaken Dublin since 2024, both in absolute index level (165.2 vs 148.4 as of March 2026) and annual growth rate (7.2% vs 5.7%), signaling a structural shift in housing demand toward regional markets — likely driven by remote work and Dublin affordability pressure.
+## Executive summary
+An exploratory study of CSO residential property price indices, with regional comparisons, year-on-year changes, and a transparent six-month **scenario extrapolation**. It is not a valuation model, an individual-home price forecast or causal evidence.
 
-## Data Source
-Central Statistics Office (CSO) Ireland — Residential Property Price Index (HPM06), monthly data Jan 2005 – Mar 2026. Publicly available via [data.gov.ie](https://data.gov.ie/dataset/hpm06-residential-property-price-index).
+The published analysis previously observed faster index growth outside Dublin through March 2026. This is a historical observation, not a prediction that the trend must continue. Remote work and affordability are hypotheses, **not established causal drivers** in this dataset.
 
-## Methodology
-1. **Data cleaning** (`scripts/clean_data.py`): Filtered raw CSO data to the index-level series, parsed dates, pivoted to wide format, and calculated month-over-month and year-over-year % changes for National, Dublin, and Rest-of-Ireland series.
-2. **Exploratory analysis**: Identified the boom (2005–2007), bust (2008–2012), and recovery (2013–present) cycle, and the recent divergence between Dublin and Rest-of-Ireland growth rates.
-3. **Forecasting**: 6-month forward projection using 12-month trailing CAGR (compound monthly growth rate) extrapolation — chosen for interpretability over black-box models, since the business question concerns trend direction rather than precise point estimates.
-4. **Dashboard**: Built in Power BI, combining actual and forecast data into a single continuous series for visualization.
+## Data
+Source: [Central Statistics Office Ireland, HPM06](https://data.gov.ie/dataset/hpm06-residential-property-price-index). Snapshot: `data/irppi_raw.csv`. **Index levels measure relative changes, not comparable euro prices of homes across regions.**
 
-## Dashboard
-![Dashboard Screenshot](images/irppi_dashboard.png)
+## Reproduce
+Requires Python 3.10+. Run from repository root:
 
-The dashboard highlights the latest index values, the year-over-year growth divergence between regions, and the long-run price index trend since 2005.
+```bash
+python -m pip install -r requirements.txt
+python scripts/irppi_clean_data.py
+python scripts/irppi_eda_analysis.py
+python scripts/irppi_forecast_analysis.py
+python scripts/irppi_backtest.py
+python -m pytest -q
+```
 
-## Exploratory Data Analysis
-![EDA Trends](images/irppi_eda_trends.png)
+Outputs: `data/irppi_national_dublin.csv`, `data/irppi_forecast.csv`, and figures in `images/`. Open `dashboard/irppi.pbix` in Power BI Desktop (refresh the report's local file paths where necessary).
 
-The data shows a clear boom-bust-recovery cycle: prices peaked in 2007, crashed by roughly 45% by 2012-13 (Celtic Tiger bust), and have been recovering steadily since 2013, now at all-time highs nationally.
+## Method
+- Select index-level series, parse monthly dates, pivot, calculate MoM and YoY percentage changes.
+- Compare national, Dublin and non-Dublin index trends.
+- Extrapolate trailing 12-month compound growth six months ahead. This is a **simple unvalidated baseline/scenario**, not a tested forecast.
+- Present findings and assumptions in Power BI.
 
-## Forecast
-![Forecast](images/irppi_forecast_plot.png)
+![EDA](images/irppi_eda_trends.png)
+![Scenario extrapolation](images/irppi_forecast_plot.png)
 
-Using 12-month trailing CAGR extrapolation, Rest-of-Ireland prices are projected to continue outpacing Dublin over the next 6 months, reinforcing the regional shift identified in the EDA.
+## Project files
+- `scripts/irppi_clean_data.py` — cleaning and calculated growth
+- `scripts/irppi_eda_analysis.py` — descriptive analysis
+- `scripts/irppi_forecast_analysis.py` — extrapolation
+- `scripts/irppi_backtest.py` — rolling-origin six-month comparison against last-value and seasonal-naïve baselines; writes `data/irppi_backtest_results.csv`
+- `dashboard/irppi.pbix` — dashboard
+- `data/` — raw snapshot and prepared files
 
-## Repository Structure
-- `data/` — raw and cleaned CSV files
-- `scripts/clean_data.py` — data cleaning and transformation
-- `scripts/eda_analysis.py` — exploratory analysis and trend visualization
-- `scripts/forecast_analysis.py` — 6-month price forecast model
-- `images/` — exploratory plots and dashboard screenshots
-- `dashboard/` — Power BI dashboard file
+## Limitations and roadmap
+1. A rolling-origin baseline comparison and MAE/RMSE reporting script has been added. **Results have not been independently run/verified in this review**; do not claim accuracy or superiority without reviewing outputs and assumptions.
+2. Add schema/duplicate/missing-date tests and data-freshness checks.
+3. Verify consistent index-base definitions and interpretation across series.
+4. Improve Power BI portability.
+5. Test any proposed drivers against independent explanatory data; do not infer causality from divergent index trends.
 
-## Tools Used
-Python (pandas, matplotlib), Power BI, CSO open data and AI coding assistants (Claude) were used to accelerate script development and debugging. All methodology, analysis decisions, and findings were reviewed and validated by the author.
+Tools: Python (pandas, matplotlib), Power BI. AI-assisted implementation, with analytical responsibility retained by the author.
 
-## Author
-Hitesh Srinivas
-
-[LinkedIn](https://www.linkedin.com/in/hitesh-s-116380252/) | [Email](mailto:srinihitesh37@gmail.com)
+Author: Hitesh Srinivas · [LinkedIn](https://www.linkedin.com/in/hitesh-s-116380252/)
