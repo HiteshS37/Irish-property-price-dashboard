@@ -24,7 +24,7 @@ python scripts/irppi_backtest.py
 python -m pytest -q
 ```
 
-Outputs: `data/irppi_national_dublin.csv`, `data/rppi_forecast.csv`, and figures in `images/`. Open `dashboard/irppi.pbix` in Power BI Desktop (refresh the report's local file paths where necessary).
+Outputs: `data/irppi_national_dublin.csv`, `data/irppi_forecast.csv`, and figures in `images/`. Open `dashboard/irppi.pbix` in Power BI Desktop (refresh the report's local file paths where necessary).
 
 ## Method
 - Select index-level series, parse monthly dates, pivot, calculate MoM and YoY percentage changes.
