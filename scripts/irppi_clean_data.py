@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('/mnt/user-data/uploads/HPM06_20260612071320.csv')
+df = pd.read_csv('data/irppi_raw.csv')
 
 # Keep only the actual index level (not pre-computed % changes - we'll derive these)
 df = df[df['Statistic Label'] == 'Residential Property Price Index'].copy()
@@ -41,6 +41,6 @@ for col in ['National - all residential properties', 'Dublin - all residential p
     phase1_wide[f'{col} MoM %'] = phase1_wide[col].pct_change() * 100
     phase1_wide[f'{col} YoY %'] = phase1_wide[col].pct_change(12) * 100
 
-phase1_wide.to_csv('/home/claude/rppi_national_dublin.csv', index=False)
+phase1_wide.to_csv('data/irppi_national_dublin.csv', index=False)
 print("Saved. Shape:", phase1_wide.shape)
 print(phase1_wide.tail())
