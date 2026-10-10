@@ -7,7 +7,7 @@ for National, Dublin, and Rest-of-Ireland price indices.
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('data/rppi_national_dublin.csv', parse_dates=['Date'])
+df = pd.read_csv('data/irppi_national_dublin.csv', parse_dates=['Date'])
 df = df.set_index('Date')
 
 series_map = {
@@ -33,7 +33,7 @@ for name, col in series_map.items():
     print(f"{name}: last actual = {last_val:.1f}, monthly growth = {monthly_growth*100:.2f}%, "
           f"+6mo forecast = {forecast_vals[-1]:.1f}")
 
-forecast_df.to_csv('data/rppi_forecast.csv')
+forecast_df.to_csv('data/irppi_forecast.csv')
 
 # Plot: last 3 years + 6-month forecast
 fig, ax = plt.subplots(figsize=(10, 5))
