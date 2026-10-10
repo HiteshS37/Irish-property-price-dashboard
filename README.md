@@ -20,6 +20,8 @@ python -m pip install -r requirements.txt
 python scripts/irppi_clean_data.py
 python scripts/irppi_eda_analysis.py
 python scripts/irppi_forecast_analysis.py
+python scripts/irppi_backtest.py
+python -m pytest -q
 ```
 
 Outputs: `data/irppi_national_dublin.csv`, `data/rppi_forecast.csv`, and figures in `images/`. Open `dashboard/irppi.pbix` in Power BI Desktop (refresh the report's local file paths where necessary).
@@ -37,11 +39,12 @@ Outputs: `data/irppi_national_dublin.csv`, `data/rppi_forecast.csv`, and figures
 - `scripts/irppi_clean_data.py` — cleaning and calculated growth
 - `scripts/irppi_eda_analysis.py` — descriptive analysis
 - `scripts/irppi_forecast_analysis.py` — extrapolation
+- `scripts/irppi_backtest.py` — rolling-origin six-month comparison against last-value and seasonal-naïve baselines; writes `data/irppi_backtest_results.csv`
 - `dashboard/irppi.pbix` — dashboard
 - `data/` — raw snapshot and prepared files
 
 ## Limitations and roadmap
-1. Run rolling-origin six-month backtests, compare to naïve and seasonal baselines, then report MAE/RMSE. Accuracy is **not yet established**.
+1. A rolling-origin baseline comparison and MAE/RMSE reporting script has been added. **Results have not been independently run/verified in this review**; do not claim accuracy or superiority without reviewing outputs and assumptions.
 2. Add schema/duplicate/missing-date tests and data-freshness checks.
 3. Verify consistent index-base definitions and interpretation across series.
 4. Improve Power BI portability.
